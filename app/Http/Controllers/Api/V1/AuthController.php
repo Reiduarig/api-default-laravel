@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\API\V1;
 
-use App\Http\Controllers\Api\V1\Controller;
+use App\Http\Controllers\API\V1\Controller;
 use App\Traits\ApiResponses;
 use Illuminate\Http\Request;
-use App\Http\Requests\Api\V1\Auth\LoginRequest;
+use App\Http\Requests\API\V1\Auth\LoginRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
