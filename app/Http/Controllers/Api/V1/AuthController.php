@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
 use App\Traits\ApiResponses;
 use Illuminate\Http\Request;
-use App\Http\Requests\ApiLoginRequest;
+use App\Http\Requests\Api\V1\ApiLoginRequest;
 
 
 class AuthController extends Controller
