@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\Controller;
 use App\Models\Ticket;
 use App\Http\Requests\Api\V1\StoreTicketRequest;
 use App\Http\Requests\Api\V1\UpdateTicketRequest;
+use App\Http\Resources\V1\TicketResource;
 
 class TicketController extends Controller
 {
@@ -15,8 +16,10 @@ class TicketController extends Controller
     public function index()
     {
         try {
-            // Simulate an error for demonstration purposes
-                    return response()->json(Ticket::all());
+
+            return TicketResource::collection(Ticket::paginate());
+
+
 
         } catch (\Exception $e) {
             // Log the exception or handle it as needed
@@ -45,7 +48,7 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        //
+        return new TicketResource($ticket);
     }
 
     /**
