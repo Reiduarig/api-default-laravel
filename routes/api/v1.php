@@ -7,16 +7,17 @@ use App\Http\Controllers\Api\V1\TicketController;
 
 
 Route::prefix('auth')->group(function () {
-    Route::post('/login', [AuthController::class, 'login'])->name('login');
-    Route::post('/register', [AuthController::class, 'register'])->name('register');
+    Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+    Route::post('/register', [AuthController::class, 'register'])->name('auth.register');
 });
 
-Route::apiResource('tickets', TicketController::class);
 
 
 Route::middleware('auth:sanctum')->group(function () {
 
-    // Route::apiResource('tickets', TicketController::class)->name('tickets');
+    Route::apiResource('tickets', TicketController::class);
+
+    Route::post('/logout', [AuthController::class, 'logout']);
 
 });
 

@@ -6,6 +6,12 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Routing\Middleware\ThrottleRequests;
 
 
+Route::get('/', function () {
+    return response()->json(['message' => 'API is working'], 200);
+});
+
+
+
 Route::prefix('v1')
     ->as('v1.')
     ->middleware(ThrottleRequests::with(10,1)) // 10 requests per minute
