@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Resources\V1;
+namespace App\Http\Resources\API\V1;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\API\V1\UserResource;
 
 class TicketResource extends JsonResource
 {
@@ -23,7 +24,7 @@ class TicketResource extends JsonResource
             'id' => $this->id,
             'attributes' => [
                 'title' => $this->title,
-                'description' => $this->description,
+                'description' => $this->when(request()->routeIs('tickets.show'), $this->description),
                 'status' => $this->status,
                 'created_at' => $this->created_at,
                 'updated_at' => $this->updated_at,
@@ -35,10 +36,14 @@ class TicketResource extends JsonResource
                         'id' => $this->user_id,
                     ],
                     'links' => [
-                        ['self' => 'por implementar'], // Puedes agregar enlaces relacionados si es necesario
+                        'user' => route('v1.users.show', ['user' => $this->user_id]),
                     ],
                 ],
             ],
+            // 'includes' => [
+            //     // (Opcional) Puedes incluir recursos relacionados aquí si es necesario
+            //     new UserResource($this->whenLoaded('user')),
+            // ],
             'links' => [
                 ['self' => route('v1.tickets.show', ['ticket' => $this->id])],
             ],
