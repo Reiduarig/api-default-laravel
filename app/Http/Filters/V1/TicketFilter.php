@@ -2,25 +2,17 @@
 
 namespace App\Http\Filters\V1;
 
-use Illuminate\Support\Facades\Log;
-
 class TicketFilter extends QueryFilter
 {
-    /**
-     * Filter by status.
-     */
-    public function status($value)
-    {
-        return $this->builder->whereIn('status', explode(',', $value));
-    }
+    protected $sortable = [
+        'title', 
+        'status',
+        'created_at', 
+        'updated_at'
+    ];
 
     public function title($value)
     {
-        // Logging para depuración
-        Log::info('TicketFilter title method called', [
-            'original_value' => $value,
-            'decoded_value' => urldecode($value)
-        ]);
         
         // Decodificar la URL en caso de que venga codificada
         $decodedValue = urldecode($value);
@@ -32,11 +24,15 @@ class TicketFilter extends QueryFilter
         if (strpos($likeValue, '%') === false) {
             $likeValue = '%' . $likeValue . '%';
         }
-        
-        Log::info('TicketFilter final like value', ['like_value' => $likeValue]);
-        
+                
         return $this->builder->where('title', 'like', $likeValue);
     }    
+
+    public function status($value)
+    {
+        return $this->builder->whereIn('status', explode(',', $value));
+    }
+
     
     public function created_at($value)
     {

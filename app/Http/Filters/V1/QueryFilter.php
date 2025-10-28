@@ -9,13 +9,52 @@ abstract class QueryFilter
 {
     protected $builder;
     protected $request;
+    protected $sortable = [];
 
     public function __construct(Request $request)
     {
         $this->request = $request;
     }
 
-    public function filter($arr)
+
+    public function apply(Builder $builder)
+    {
+        $this->builder = $builder;
+
+        // Procesar específicamente los filtros anidados como filter[title]
+        if ($this->request->has('filter')) {
+
+            $filters = $this->request->get('filter');
+
+            if (is_array($filters)) {
+
+                foreach ($filters as $name => $value) {
+
+                    if (method_exists($this, $name)) {
+                        $this->$name($value);
+                    }
+
+                }
+
+            }
+
+        } else {
+            // Solo procesar parámetros directos si no hay filtros anidados
+            foreach ($this->request->all() as $name => $value) {
+              
+                if (method_exists($this, $name)) {
+              
+                    $this->$name($value);
+              
+                }
+            
+            }
+        }
+
+        return $this->builder;
+    }
+
+    protected function filter($arr)
     {
         foreach ($arr as $name => $value) {
             if (method_exists($this, $name)) {
@@ -27,30 +66,29 @@ abstract class QueryFilter
         return $this->builder;
     }
 
-    public function apply(Builder $builder)
+    protected function sort($value)
     {
-        $this->builder = $builder;
+        $columns = explode(',', $value);
+        
+        foreach ($columns as $column) {
+        
+            $direction = 'asc';
+        
+            if (str_starts_with($column, '-')) {
+                
+                $direction = 'desc';
+                
+                $column = substr($column, 1);
+            
+            }
 
-        // Procesar específicamente los filtros anidados como filter[title]
-        if ($this->request->has('filter')) {
-            $filters = $this->request->get('filter');
-            if (is_array($filters)) {
-                foreach ($filters as $name => $value) {
-                    if (method_exists($this, $name)) {
-                        Log::info('Calling filter method', ['method' => $name, 'value' => $value]);
-                        $this->$name($value);
-                    }
-                }
+            if (!in_array($column, $this->sortable)) {
+                
+                continue; // Omitir columnas no permitidas
+            
             }
-        } else {
-            // Solo procesar parámetros directos si no hay filtros anidados
-            foreach ($this->request->all() as $name => $value) {
-                if (method_exists($this, $name)) {
-                    $this->$name($value);
-                }
-            }
+
+            $this->builder->orderBy($column, $direction);
         }
-
-        return $this->builder;
     }
 }
