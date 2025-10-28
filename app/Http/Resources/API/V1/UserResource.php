@@ -14,7 +14,8 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
+        return 
+        [
             'type' => 'user',
             'id' => $this->id,
             'attributes' => [
@@ -25,6 +26,7 @@ class UserResource extends JsonResource
                     'created_at' => $this->created_at,
                     'updated_at' => $this->updated_at,
                 ]),
+            ],
             'links' => [
                 'self' => route('v1.users.show', ['user' => $this->id]),
             ],
