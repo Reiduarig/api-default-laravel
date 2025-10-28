@@ -17,11 +17,9 @@ Route::prefix('auth')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::apiResource('users', UserController::class)
-        ->only(['index', 'show'])
         ->name('*', 'users');
 
     Route::apiResource('tickets', TicketController::class)
-        ->only(['index', 'show'])
         ->name('*', 'tickets');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
