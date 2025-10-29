@@ -7,6 +7,7 @@ class TicketFilter extends QueryFilter
     protected $sortable = [
         'title', 
         'status',
+        'priority',
         'created_at', 
         'updated_at'
     ];
@@ -31,6 +32,16 @@ class TicketFilter extends QueryFilter
     public function status($value)
     {
         return $this->builder->whereIn('status', explode(',', $value));
+    }
+
+    public function author($userId)
+    {
+        return $this->builder->where('user_id', $userId);
+    }
+
+    public function priority($value)
+    {
+        return $this->builder->whereIn('priority', explode(',', $value));
     }
 
     

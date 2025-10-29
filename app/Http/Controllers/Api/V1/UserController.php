@@ -7,62 +7,88 @@ use App\Models\User;
 use App\Http\Resources\API\V1\UserResource;
 use App\Http\Requests\API\V1\StoreUserRequest;
 use App\Http\Requests\API\V1\UpdateUserRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Auth\Access\AuthorizationException;
+use App\Policies\V1\UserPolicy;
+use App\Services\API\V1\ApiResponseService;
+use App\Services\API\V1\JsonApiMapper;
+use Illuminate\Support\Facades\Log;
 
-class UserController
+
+class UserController extends ApiController
 {
-    /**
-     * Display a listing of the resource.
-     */
+    protected $policyClass = UserPolicy::class;
+    
+   
     public function index(UserFilter $filters)
     {
-        return UserResource::collection(User::filter($filters)->paginate());
+        $this->isAble('viewAny', User::class);
+
+        return ApiResponseService::success(
+            UserResource::collection(User::filter($filters)->paginate()),
+            'Usuarios obtenidos correctamente.'
+        );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreUserRequest $request)
     {
-        //
+      
+        $this->isAble('create', User::class);
+
+        $modelData = JsonApiMapper::mapUserData($request);
+
+        return ApiResponseService::success(
+            new UserResource(User::create($modelData)),
+            'Usuario creado correctamente.'
+        );
+          
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
+    public function show($user_id)
     {
-        return new UserResource($user);
+       
+        $user = User::findOrFail($user_id);
+        
+        $this->isAble('view', $user);
+        
+        return ApiResponseService::success(
+            new UserResource($user),
+            'Usuario obtenido correctamente.'
+        ); 
+       
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(User $user)
+    public function update(UpdateUserRequest $request, $user_id)
     {
-        //
+        
+        $user = User::findOrFail($user_id);
+        
+        $this->isAble('update', $user);
+        
+        $modelData = JsonApiMapper::mapUserUpdateData($request, $user);
+
+        $user->update($modelData);
+
+        return ApiResponseService::success(
+            new UserResource($user),
+            'Usuario actualizado correctamente.'
+        );
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateUserRequest $request, User $user)
+    public function destroy($user_id)
     {
-        //
-    }
+        
+        $user = User::findOrFail($user_id);
+        
+        $this->isAble('delete', $user);
+        
+        $user->delete();
+        
+        return ApiResponseService::success(
+            null,
+            'Usuario eliminado correctamente.'
+        );
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user)
-    {
-        //
     }
 }

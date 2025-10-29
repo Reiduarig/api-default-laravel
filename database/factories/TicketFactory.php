@@ -22,7 +22,23 @@ class TicketFactory extends Factory
             'user_id' => User::factory(),
             'title' => fake()->words(3, true),
             'description' => fake()->paragraph(),
-            'status' => fake()->randomElement(['A', 'C', 'H', 'X'])
+            'status' => fake()->randomElement(['A', 'C', 'H', 'X']),
+            'priority' => fake()->randomElement(['low', 'medium', 'high']),
+            'internal_notes' => fake()->optional(0.3)->sentence(),
+            'view_count' => fake()->numberBetween(0, 100)
         ];
+    }
+    
+    /**
+     * Configure the model factory.
+     */
+    public function configure(): static
+    {
+        return $this->afterCreating(function ($ticket) {
+            // Ensure author_id matches user_id for V2 compatibility
+            if (!$ticket->author_id) {
+                $ticket->update(['author_id' => $ticket->user_id]);
+            }
+        });
     }
 }

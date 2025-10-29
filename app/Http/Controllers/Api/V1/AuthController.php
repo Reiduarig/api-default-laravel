@@ -3,16 +3,17 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\API\V1\Controller;
-use App\Traits\ApiResponses;
 use Illuminate\Http\Request;
 use App\Http\Requests\API\V1\Auth\LoginRequest;
+use App\Http\Requests\API\V1\Auth\RegisterRequest;
 use App\Models\User;
+use App\Services\API\V1\ApiResponseService;
 use Illuminate\Support\Facades\Auth;
 
 
 class AuthController extends Controller
 {
-    use ApiResponses;
+    
 
     public function login(LoginRequest $request)
     {
@@ -22,34 +23,56 @@ class AuthController extends Controller
         if (! auth()->attempt([
             'email' => data_get($credentials, 'email'),
             'password' => data_get($credentials, 'password'),
-        ])) 
-        {
-            return $this->error('Credenciales incorrectas', 401);
+        ])) {
+            return ApiResponseService::error(
+                'Credenciales incorrectas',
+                401
+            );
         }
-
-        return $this->success(
-            'Autenticado correctamente',
+       
+        $token = auth()
+            ->user()
+            ->createToken(
+                data_get($credentials, 'email'),
+                ['*'],
+                now()->addMonth()
+            )->plainTextToken;
+        
+        return ApiResponseService::success(
             [
-                'token' => auth()->user()->createToken(
-                    'API Token for ' . auth()->user()->email,
-                    ['*'],
-                    now()->addMonth())->plainTextToken,
-            ]
+                'user' => auth()->user(),
+                'token' => $token
+            ],
+            'Inicio de sesión exitoso.'
         );
     }
 
-    public function register()
+    public function register(RegisterRequest $request)
     {
-        return $this->success('register');
+
+        $user = User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+        ]);
+
+        return ApiResponseService::success('Registro exitoso.', $user);
     }
 
     // Revocar el token de acceso actual
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
+        $user = $request->user();
+        $token = $user->currentAccessToken();
+        
+        // En testing, el token puede ser TransientToken que no tiene delete()
+        if ($token && method_exists($token, 'delete')) {
+            $token->delete();
+        }
 
-        return $this->success(
-            'Sesión cerrada correctamente',
+        return ApiResponseService::success(
+            [],
+            'Sesión cerrada correctamente'
         );
     }
 
@@ -57,10 +80,10 @@ class AuthController extends Controller
     public function logoutAllDevices(Request $request)
     {
         $request->user()->tokens()->delete();
-
-        return $this->success(
-            'Sesión cerrada en todos los dispositivos correctamente',
-            []
+        return ApiResponseService::success(
+            [],
+            'Sesión cerrada correctamente'
         );
-    } 
+    }
+
 }

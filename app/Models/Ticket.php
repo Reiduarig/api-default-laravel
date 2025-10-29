@@ -18,9 +18,18 @@ class Ticket extends Model
         'description',
         'status',
         'user_id',
+        'author_id', // V2 compatibility
+        'priority',
+        'internal_notes',
+        'view_count',
     ];
 
     public function author(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+    
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
