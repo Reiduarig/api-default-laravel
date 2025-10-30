@@ -23,15 +23,11 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password')
         ]);
 
-        $users = User::factory(10)->create();
+        $users = User::factory(5)->create();
 
-        Ticket::factory(100)
+        Ticket::factory(10)
             ->recycle($users)
             ->create();
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
     }
 }
