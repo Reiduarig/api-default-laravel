@@ -26,11 +26,13 @@ class Ticket extends Model
 
     public function author(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        // V2: Usar author_id si existe, fallback a user_id para compatibilidad V1
+        return $this->belongsTo(User::class, 'author_id');
     }
     
     public function user(): BelongsTo
     {
+        // V1: Mantener user_id para compatibilidad
         return $this->belongsTo(User::class, 'user_id');
     }
 
