@@ -33,9 +33,9 @@ class TicketFactory extends Factory
      * Configure the model factory.
      */
     public function configure(): static
-    {
+    { 
         return $this->afterCreating(function ($ticket) {
-            // Ensure author_id matches user_id for V2 compatibility
+            // Añadir author_id igual a user_id si no está establecido para mantener compatibilidad
             if (!$ticket->author_id) {
                 $ticket->update(['author_id' => $ticket->user_id]);
             }
