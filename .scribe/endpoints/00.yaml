@@ -1,0 +1,619 @@
+name: Autenticación
+description: |-
+
+  Endpoints para gestión de autenticación usando Laravel Sanctum.
+  Los endpoints de login y register no requieren autenticación.
+  Los endpoints de logout requieren autenticación Bearer token.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/v1/auth/login
+    metadata:
+      custom: []
+      groupName: Autenticación
+      groupDescription: |-
+
+        Endpoints para gestión de autenticación usando Laravel Sanctum.
+        Los endpoints de login y register no requieren autenticación.
+        Los endpoints de logout requieren autenticación Bearer token.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Iniciar sesión'
+      description: 'Autentica un usuario con email y contraseña, devuelve un token Bearer para acceder a endpoints protegidos.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      email:
+        custom: []
+        name: email
+        description: 'Email del usuario.'
+        required: true
+        example: admin@admin.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      password:
+        custom: []
+        name: password
+        description: 'Contraseña del usuario.'
+        required: true
+        example: password
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      email: admin@admin.com
+      password: password
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "status": "success",
+            "message": "Inicio de sesión exitoso.",
+            "data": {
+              "user": {
+                "id": 1,
+                "name": "Admin User",
+                "email": "admin@admin.com",
+                "email_verified_at": null,
+                "created_at": "2025-10-30T10:00:00.000000Z",
+                "updated_at": "2025-10-30T10:00:00.000000Z"
+              },
+              "token": "1|abcdef123456789..."
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 401
+        content: |-
+          {
+            "status": "error",
+            "message": "Credenciales incorrectas"
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/v1/auth/register
+    metadata:
+      custom: []
+      groupName: Autenticación
+      groupDescription: |-
+
+        Endpoints para gestión de autenticación usando Laravel Sanctum.
+        Los endpoints de login y register no requieren autenticación.
+        Los endpoints de logout requieren autenticación Bearer token.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Registrar usuario'
+      description: 'Crea una nueva cuenta de usuario en el sistema.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'Nombre completo del usuario.'
+        required: true
+        example: 'Juan Pérez'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      email:
+        custom: []
+        name: email
+        description: 'Email único del usuario.'
+        required: true
+        example: juan@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      password:
+        custom: []
+        name: password
+        description: 'Contraseña (mínimo 8 caracteres).'
+        required: true
+        example: password123
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      password_confirmation:
+        custom: []
+        name: password_confirmation
+        description: 'Confirmación de contraseña.'
+        required: true
+        example: password123
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      name: 'Juan Pérez'
+      email: juan@example.com
+      password: password123
+      password_confirmation: password123
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+            "status": "success",
+            "message": "Registro exitoso.",
+            "data": {
+              "id": 2,
+              "name": "Juan Pérez",
+              "email": "juan@example.com",
+              "email_verified_at": null,
+              "created_at": "2025-10-30T11:00:00.000000Z",
+              "updated_at": "2025-10-30T11:00:00.000000Z"
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+            "status": "error",
+            "message": "Los datos proporcionados no son válidos.",
+            "data": {
+              "email": ["The email has already been taken."]
+            }
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/v1/logout
+    metadata:
+      custom: []
+      groupName: Autenticación
+      groupDescription: |-
+
+        Endpoints para gestión de autenticación usando Laravel Sanctum.
+        Los endpoints de login y register no requieren autenticación.
+        Los endpoints de logout requieren autenticación Bearer token.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Cerrar sesión'
+      description: 'Revoca el token actual y cierra la sesión en este dispositivo específico.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer YOUR_BEARER_TOKEN'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "status": "success",
+            "message": "Sesión cerrada correctamente",
+            "data": []
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/v1/logoutAllDevices
+    metadata:
+      custom: []
+      groupName: Autenticación
+      groupDescription: |-
+
+        Endpoints para gestión de autenticación usando Laravel Sanctum.
+        Los endpoints de login y register no requieren autenticación.
+        Los endpoints de logout requieren autenticación Bearer token.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Cerrar sesión en todos los dispositivos'
+      description: |-
+        Revoca TODOS los tokens del usuario, cerrando sesión en todos los dispositivos donde esté autenticado.
+        Útil para desconectar por seguridad o cambio de contraseña.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer YOUR_BEARER_TOKEN'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "status": "success",
+            "message": "Sesión cerrada correctamente",
+            "data": []
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/v2/login
+    metadata:
+      custom: []
+      groupName: Autenticación
+      groupDescription: |-
+
+        Endpoints para gestión de autenticación usando Laravel Sanctum.
+        Los endpoints de login y register no requieren autenticación.
+        Los endpoints de logout requieren autenticación Bearer token.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Iniciar sesión'
+      description: 'Autentica un usuario con email y contraseña, devuelve un token Bearer para acceder a endpoints protegidos.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      email:
+        custom: []
+        name: email
+        description: 'Email del usuario.'
+        required: true
+        example: admin@admin.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      password:
+        custom: []
+        name: password
+        description: 'Contraseña del usuario.'
+        required: true
+        example: password
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      email: admin@admin.com
+      password: password
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "status": "success",
+            "message": "Inicio de sesión exitoso.",
+            "data": {
+              "user": {
+                "id": 1,
+                "name": "Admin User",
+                "email": "admin@admin.com",
+                "email_verified_at": null,
+                "created_at": "2025-10-30T10:00:00.000000Z",
+                "updated_at": "2025-10-30T10:00:00.000000Z"
+              },
+              "token": "1|abcdef123456789..."
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 401
+        content: |-
+          {
+            "status": "error",
+            "message": "Credenciales incorrectas"
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/v2/register
+    metadata:
+      custom: []
+      groupName: Autenticación
+      groupDescription: |-
+
+        Endpoints para gestión de autenticación usando Laravel Sanctum.
+        Los endpoints de login y register no requieren autenticación.
+        Los endpoints de logout requieren autenticación Bearer token.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Registrar usuario'
+      description: 'Crea una nueva cuenta de usuario en el sistema.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'Nombre completo del usuario.'
+        required: true
+        example: 'Juan Pérez'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      email:
+        custom: []
+        name: email
+        description: 'Email único del usuario.'
+        required: true
+        example: juan@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      password:
+        custom: []
+        name: password
+        description: 'Contraseña (mínimo 8 caracteres).'
+        required: true
+        example: password123
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      password_confirmation:
+        custom: []
+        name: password_confirmation
+        description: 'Confirmación de contraseña.'
+        required: true
+        example: password123
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      name: 'Juan Pérez'
+      email: juan@example.com
+      password: password123
+      password_confirmation: password123
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+            "status": "success",
+            "message": "Registro exitoso.",
+            "data": {
+              "id": 2,
+              "name": "Juan Pérez",
+              "email": "juan@example.com",
+              "email_verified_at": null,
+              "created_at": "2025-10-30T11:00:00.000000Z",
+              "updated_at": "2025-10-30T11:00:00.000000Z"
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+            "status": "error",
+            "message": "Los datos proporcionados no son válidos.",
+            "data": {
+              "email": ["The email has already been taken."]
+            }
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/v2/logout
+    metadata:
+      custom: []
+      groupName: Autenticación
+      groupDescription: |-
+
+        Endpoints para gestión de autenticación usando Laravel Sanctum.
+        Los endpoints de login y register no requieren autenticación.
+        Los endpoints de logout requieren autenticación Bearer token.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Cerrar sesión'
+      description: 'Revoca el token actual y cierra la sesión en este dispositivo específico.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer YOUR_BEARER_TOKEN'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "status": "success",
+            "message": "Sesión cerrada correctamente",
+            "data": []
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/v2/logout-all-devices
+    metadata:
+      custom: []
+      groupName: Autenticación
+      groupDescription: |-
+
+        Endpoints para gestión de autenticación usando Laravel Sanctum.
+        Los endpoints de login y register no requieren autenticación.
+        Los endpoints de logout requieren autenticación Bearer token.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Cerrar sesión en todos los dispositivos'
+      description: |-
+        Revoca TODOS los tokens del usuario, cerrando sesión en todos los dispositivos donde esté autenticado.
+        Útil para desconectar por seguridad o cambio de contraseña.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer YOUR_BEARER_TOKEN'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "status": "success",
+            "message": "Sesión cerrada correctamente",
+            "data": []
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

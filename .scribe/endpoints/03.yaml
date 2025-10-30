@@ -1,0 +1,1075 @@
+name: 'Tickets (V2)'
+description: |-
+
+  Gestión completa de tickets de soporte con funcionalidades avanzadas como filtros, búsqueda, 
+  estadísticas y gestión de relaciones. Incluye arquitectura mejorada con Actions y Repository Pattern.
+  Todos los endpoints requieren autenticación Bearer token.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v2/tickets
+    metadata:
+      custom: []
+      groupName: 'Tickets (V2)'
+      groupDescription: |-
+
+        Gestión completa de tickets de soporte con funcionalidades avanzadas como filtros, búsqueda, 
+        estadísticas y gestión de relaciones. Incluye arquitectura mejorada con Actions y Repository Pattern.
+        Todos los endpoints requieren autenticación Bearer token.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Listar tickets'
+      description: |-
+        Obtiene una lista paginada de tickets con filtros avanzados, búsqueda por texto y ordenamiento.
+        Soporta inclusión de relaciones como autor y comentarios.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer YOUR_BEARER_TOKEN'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      page:
+        custom: []
+        name: page
+        description: 'Número de página para paginación.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Elementos por página (máximo 100).'
+        required: false
+        example: 15
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      search:
+        custom: []
+        name: search
+        description: 'Búsqueda en título y descripción.'
+        required: false
+        example: bug
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      sort:
+        custom: []
+        name: sort
+        description: 'Campo de ordenamiento. Valores: title, status, priority, created_at, updated_at.'
+        required: false
+        example: created_at
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      direction:
+        custom: []
+        name: direction
+        description: 'Dirección del ordenamiento. Valores: asc, desc.'
+        required: false
+        example: desc
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      include:
+        custom: []
+        name: include
+        description: 'Relaciones a incluir. Valores: author, user, comments.'
+        required: false
+        example: 'author,comments'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[status]':
+        custom: []
+        name: 'filter[status]'
+        description: 'Filtrar por estado. Valores: A(abierto), H(en_progreso), C(cerrado), X(cancelado).'
+        required: false
+        example: A
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[priority]':
+        custom: []
+        name: 'filter[priority]'
+        description: 'Filtrar por prioridad. Valores: low, medium, high, critical.'
+        required: false
+        example: high
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[author_id]':
+        custom: []
+        name: 'filter[author_id]'
+        description: 'Filtrar por ID del autor.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      page: 1
+      per_page: 15
+      search: bug
+      sort: created_at
+      direction: desc
+      include: 'author,comments'
+      'filter[status]': A
+      'filter[priority]': high
+      'filter[author_id]': 1
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "status": "success",
+            "message": "Tickets obtenidos correctamente.",
+            "data": [
+              {
+                "id": "1",
+                "type": "ticket",
+                "attributes": {
+                  "title": "Error en sistema de login",
+                  "description": "Los usuarios no pueden iniciar sesión después de la actualización",
+                  "status": "A",
+                  "priority": "high",
+                  "view_count": 15,
+                  "created_at": "2025-10-30T10:00:00.000000Z",
+                  "updated_at": "2025-10-30T10:30:00.000000Z",
+                  "days_open": 0.5,
+                  "is_overdue": false,
+                  "internal_notes": "Revisado por equipo técnico"
+                },
+                "relationships": {
+                  "author": {
+                    "links": {
+                      "self": "http://api-default-laravel.test/api/v2/tickets/1/relationships/author",
+                      "related": "http://api-default-laravel.test/api/v2/tickets/1/author"
+                    }
+                  }
+                },
+                "meta": {
+                  "version": "2.0",
+                  "cached_at": "2025-10-30T11:00:00.000000Z"
+                }
+              }
+            ],
+            "links": {
+              "first": "http://api-default-laravel.test/api/v2/tickets?page=1",
+              "last": "http://api-default-laravel.test/api/v2/tickets?page=10",
+              "next": "http://api-default-laravel.test/api/v2/tickets?page=2"
+            },
+            "meta": {
+              "total_tickets": 150,
+              "filters_applied": {"status": "A", "priority": "high"},
+              "includes": ["author"]
+            }
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/v2/tickets
+    metadata:
+      custom: []
+      groupName: 'Tickets (V2)'
+      groupDescription: |-
+
+        Gestión completa de tickets de soporte con funcionalidades avanzadas como filtros, búsqueda, 
+        estadísticas y gestión de relaciones. Incluye arquitectura mejorada con Actions y Repository Pattern.
+        Todos los endpoints requieren autenticación Bearer token.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Crear ticket'
+      description: |-
+        Crea un nuevo ticket de soporte en el sistema usando Action Pattern para lógica de negocio.
+        El ticket se asigna automáticamente al usuario autenticado como autor.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer YOUR_BEARER_TOKEN'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      data.attributes:
+        custom: []
+        name: data.attributes
+        description: ''
+        required: false
+        example: []
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      data:
+        custom: []
+        name: data
+        description: ''
+        required: false
+        example: []
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      data.attributes.title:
+        custom: []
+        name: data.attributes.title
+        description: 'Título del ticket (máximo 255 caracteres).'
+        required: true
+        example: 'Error en sistema de login'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      data.attributes.description:
+        custom: []
+        name: data.attributes.description
+        description: 'Descripción detallada del problema.'
+        required: true
+        example: 'Los usuarios no pueden iniciar sesión después de la actualización del sistema'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      data.attributes.status:
+        custom: []
+        name: data.attributes.status
+        description: "Estado inicial del ticket (opcional, por defecto 'A'). Valores: A, H, C, X."
+        required: false
+        example: A
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      data.relationships.author.data:
+        custom: []
+        name: data.relationships.author.data
+        description: ''
+        required: false
+        example: []
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      data.relationships.author:
+        custom: []
+        name: data.relationships.author
+        description: ''
+        required: false
+        example: []
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      data.relationships:
+        custom: []
+        name: data.relationships
+        description: ''
+        required: false
+        example: []
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      data.relationships.author.data.id:
+        custom: []
+        name: data.relationships.author.data.id
+        description: 'The <code>id</code> of an existing record in the users table.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      data.attributes.priority:
+        custom: []
+        name: data.attributes.priority
+        description: 'Prioridad del ticket. Valores: low, medium, high, critical.'
+        required: true
+        example: high
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      data.attributes.internal_notes:
+        custom: []
+        name: data.attributes.internal_notes
+        description: 'Notas internas del ticket (opcional).'
+        required: false
+        example: 'Revisado por equipo técnico'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      data.attributes.view_count:
+        custom: []
+        name: data.attributes.view_count
+        description: validation.min.
+        required: false
+        example: 39
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      data.type:
+        custom: []
+        name: data.type
+        description: 'Tipo del recurso. Debe ser "ticket".'
+        required: true
+        example: ticket
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      data:
+        attributes:
+          title: 'Error en sistema de login'
+          description: 'Los usuarios no pueden iniciar sesión después de la actualización del sistema'
+          status: A
+          priority: high
+          internal_notes: 'Revisado por equipo técnico'
+          view_count: 39
+        relationships:
+          author:
+            data:
+              id: 16
+        type: ticket
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+            "status": "success",
+            "message": "Ticket creado correctamente.",
+            "data": {
+              "id": "151",
+              "type": "ticket",
+              "attributes": {
+                "title": "Error en sistema de login",
+                "description": "Los usuarios no pueden iniciar sesión después de la actualización del sistema",
+                "status": "A",
+                "priority": "high",
+                "view_count": 0,
+                "created_at": "2025-10-30T11:00:00.000000Z",
+                "updated_at": "2025-10-30T11:00:00.000000Z",
+                "days_open": 0,
+                "is_overdue": false,
+                "internal_notes": "Revisado por equipo técnico"
+              },
+              "relationships": {
+                "author": {
+                  "links": {
+                    "self": "http://api-default-laravel.test/api/v2/tickets/151/relationships/author",
+                    "related": "http://api-default-laravel.test/api/v2/tickets/151/author"
+                  }
+                }
+              },
+              "meta": {
+                "version": "2.0",
+                "cached_at": "2025-10-30T11:00:00.000000Z"
+              }
+            },
+            "meta": {
+              "created_via": "api_v2"
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+            "status": "error",
+            "message": "Los datos proporcionados no son válidos.",
+            "data": {
+              "title": ["The title field is required."],
+              "priority": ["The selected priority is invalid."]
+            }
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v2/tickets/{id}'
+    metadata:
+      custom: []
+      groupName: 'Tickets (V2)'
+      groupDescription: |-
+
+        Gestión completa de tickets de soporte con funcionalidades avanzadas como filtros, búsqueda, 
+        estadísticas y gestión de relaciones. Incluye arquitectura mejorada con Actions y Repository Pattern.
+        Todos los endpoints requieren autenticación Bearer token.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Mostrar ticket'
+      description: 'Obtiene un ticket específico con relaciones optimizadas e incremento automático de vistas.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer YOUR_BEARER_TOKEN'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the ticket.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      ticket:
+        custom: []
+        name: ticket
+        description: 'ID del ticket.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+      ticket: 1
+    queryParameters:
+      include:
+        custom: []
+        name: include
+        description: 'Relaciones a incluir. Valores: user, comments.'
+        required: false
+        example: 'user,comments'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      include: 'user,comments'
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "status": "success",
+            "message": "Ticket obtenido correctamente.",
+            "data": {
+              "id": "1",
+              "type": "ticket",
+              "attributes": {
+                "title": "Error en sistema de login",
+                "description": "Los usuarios no pueden iniciar sesión después de la actualización",
+                "status": "A",
+                "priority": "high",
+                "view_count": 16,
+                "created_at": "2025-10-30T10:00:00.000000Z",
+                "updated_at": "2025-10-30T10:30:00.000000Z",
+                "days_open": 0.5,
+                "is_overdue": false,
+                "internal_notes": "Revisado por equipo técnico"
+              },
+              "relationships": {
+                "author": {
+                  "links": {
+                    "self": "http://api-default-laravel.test/api/v2/tickets/1/relationships/author",
+                    "related": "http://api-default-laravel.test/api/v2/tickets/1/author"
+                  }
+                }
+              },
+              "meta": {
+                "version": "2.0",
+                "cached_at": "2025-10-30T11:00:00.000000Z",
+                "view_incremented": true
+              }
+            },
+            "meta": {
+              "includes": ["user"]
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: |-
+          {
+            "status": "error",
+            "message": "El recurso Ticket solicitado no fue encontrado."
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+      - PATCH
+    uri: 'api/v2/tickets/{id}'
+    metadata:
+      custom: []
+      groupName: 'Tickets (V2)'
+      groupDescription: |-
+
+        Gestión completa de tickets de soporte con funcionalidades avanzadas como filtros, búsqueda, 
+        estadísticas y gestión de relaciones. Incluye arquitectura mejorada con Actions y Repository Pattern.
+        Todos los endpoints requieren autenticación Bearer token.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Actualizar ticket'
+      description: 'Actualiza un ticket existente usando Action Pattern con validaciones y logging.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer YOUR_BEARER_TOKEN'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the ticket.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      ticket:
+        custom: []
+        name: ticket
+        description: 'ID del ticket.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+      ticket: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      data.attributes:
+        custom: []
+        name: data.attributes
+        description: ''
+        required: false
+        example: []
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      data:
+        custom: []
+        name: data
+        description: ''
+        required: false
+        example: []
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      data.attributes.title:
+        custom: []
+        name: data.attributes.title
+        description: 'Título del ticket.'
+        required: false
+        example: 'Error en sistema de login (solucionado)'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      data.attributes.description:
+        custom: []
+        name: data.attributes.description
+        description: 'Descripción del problema.'
+        required: false
+        example: 'Error solucionado mediante actualización'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      data.attributes.status:
+        custom: []
+        name: data.attributes.status
+        description: 'Estado del ticket. Valores: A, H, C, X.'
+        required: false
+        example: C
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      data.relationships.author.data:
+        custom: []
+        name: data.relationships.author.data
+        description: ''
+        required: false
+        example: []
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      data.relationships.author:
+        custom: []
+        name: data.relationships.author
+        description: ''
+        required: false
+        example: []
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      data.relationships:
+        custom: []
+        name: data.relationships
+        description: ''
+        required: false
+        example: []
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      data.relationships.author.data.id:
+        custom: []
+        name: data.relationships.author.data.id
+        description: 'The <code>id</code> of an existing record in the users table.'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      data.attributes.priority:
+        custom: []
+        name: data.attributes.priority
+        description: 'Prioridad. Valores: low, medium, high, critical.'
+        required: false
+        example: medium
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      data.attributes.internal_notes:
+        custom: []
+        name: data.attributes.internal_notes
+        description: 'Notas internas del ticket.'
+        required: false
+        example: 'Solucionado por el equipo técnico'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      data.attributes.view_count:
+        custom: []
+        name: data.attributes.view_count
+        description: validation.min.
+        required: false
+        example: 39
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      data.type:
+        custom: []
+        name: data.type
+        description: 'Tipo del recurso. Debe ser "ticket".'
+        required: true
+        example: ticket
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      data:
+        attributes:
+          title: 'Error en sistema de login (solucionado)'
+          description: 'Error solucionado mediante actualización'
+          status: C
+          priority: medium
+          internal_notes: 'Solucionado por el equipo técnico'
+          view_count: 39
+        relationships:
+          author:
+            data:
+              id: 16
+        type: ticket
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "status": "success",
+            "message": "Ticket actualizado correctamente.",
+            "data": {
+              "id": "1",
+              "type": "ticket",
+              "attributes": {
+                "title": "Error en sistema de login (solucionado)",
+                "description": "Error solucionado mediante actualización",
+                "status": "C",
+                "priority": "medium",
+                "view_count": 16,
+                "created_at": "2025-10-30T10:00:00.000000Z",
+                "updated_at": "2025-10-30T11:30:00.000000Z",
+                "days_open": 1.5,
+                "is_overdue": false,
+                "internal_notes": "Solucionado por el equipo técnico"
+              },
+              "meta": {
+                "version": "2.0",
+                "cached_at": "2025-10-30T11:30:00.000000Z"
+              }
+            },
+            "meta": {
+              "updated_via": "api_v2"
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: |-
+          {
+            "status": "error",
+            "message": "El recurso Ticket solicitado no fue encontrado."
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+            "status": "error",
+            "message": "Los datos proporcionados no son válidos.",
+            "data": {
+              "status": ["The selected status is invalid."]
+            }
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/v2/tickets/{id}'
+    metadata:
+      custom: []
+      groupName: 'Tickets (V2)'
+      groupDescription: |-
+
+        Gestión completa de tickets de soporte con funcionalidades avanzadas como filtros, búsqueda, 
+        estadísticas y gestión de relaciones. Incluye arquitectura mejorada con Actions y Repository Pattern.
+        Todos los endpoints requieren autenticación Bearer token.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Eliminar ticket'
+      description: 'Elimina un ticket del sistema con logging de auditoría mejorado.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer YOUR_BEARER_TOKEN'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the ticket.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      ticket:
+        custom: []
+        name: ticket
+        description: 'ID del ticket.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+      ticket: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "status": "success",
+            "message": "Ticket eliminado correctamente.",
+            "data": null,
+            "meta": {
+              "deleted_via": "api_v2"
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 403
+        content: |-
+          {
+            "status": "error",
+            "message": "No tienes permisos para realizar esta acción."
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: |-
+          {
+            "status": "error",
+            "message": "El recurso Ticket solicitado no fue encontrado."
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v2/tickets-statistics
+    metadata:
+      custom: []
+      groupName: 'Tickets (V2)'
+      groupDescription: |-
+
+        Gestión completa de tickets de soporte con funcionalidades avanzadas como filtros, búsqueda, 
+        estadísticas y gestión de relaciones. Incluye arquitectura mejorada con Actions y Repository Pattern.
+        Todos los endpoints requieren autenticación Bearer token.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Estadísticas de tickets'
+      description: |-
+        Obtiene estadísticas completas del sistema de tickets incluyendo distribución por estado,
+        prioridad, tendencias temporales y métricas de rendimiento.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer YOUR_BEARER_TOKEN'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      period:
+        custom: []
+        name: period
+        description: 'Período para métricas temporales. Valores: day, week, month, year.'
+        required: false
+        example: month
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      include_trends:
+        custom: []
+        name: include_trends
+        description: 'Incluir datos de tendencias temporales.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      period: month
+      include_trends: true
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "status": "success",
+            "message": "Estadísticas de tickets obtenidas correctamente.",
+            "data": {
+              "totals": {
+                "total_tickets": 500,
+                "open_tickets": 125,
+                "closed_tickets": 350,
+                "overdue_tickets": 15
+              },
+              "status_distribution": {
+                "active": 125,
+                "closed": 350,
+                "pending": 20,
+                "cancelled": 5
+              },
+              "priority_distribution": {
+                "low": 150,
+                "medium": 200,
+                "high": 120,
+                "critical": 30
+              },
+              "performance_metrics": {
+                "average_resolution_time": "2.5 days",
+                "most_active_authors": [
+                  {"id": 1, "name": "Admin User", "tickets_count": 45},
+                  {"id": 5, "name": "Support Team", "tickets_count": 32}
+                ],
+                "peak_hours": {
+                  "busiest_hour": 14,
+                  "tickets_created_peak": 25
+                }
+              },
+              "trends": {
+                "period": "month",
+                "created_last_period": 80,
+                "resolved_last_period": 75,
+                "growth_rate": "6.7%"
+              }
+            },
+            "meta": {
+              "generated_at": "2025-10-30T11:00:00.000000Z",
+              "cache_ttl": 300,
+              "api_version": "2.0"
+            }
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

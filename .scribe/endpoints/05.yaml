@@ -1,0 +1,106 @@
+name: 'Información del Sistema'
+description: |-
+  Obtiene información detallada sobre la versión 2.0 de la API, incluyendo características,
+  mejoras respecto a V1 y guías de migración.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v2/version
+    metadata:
+      custom: []
+      groupName: 'Información del Sistema'
+      groupDescription: |-
+        Obtiene información detallada sobre la versión 2.0 de la API, incluyendo características,
+        mejoras respecto a V1 y guías de migración.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Información de versión API V2'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer YOUR_BEARER_TOKEN'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "api_version": "2.0",
+            "features": ["repository_pattern", "action_classes", "advanced_resources"],
+            "improvements_over_v1": ["Better performance", "Enhanced error handling"],
+            "deprecations": ["None - V1 remains fully supported"],
+            "migration_guide": "/docs/v2-migration"
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v2/health
+    metadata:
+      custom: []
+      groupName: 'Información del Sistema'
+      groupDescription: |-
+        Verifica el estado de salud de todos los componentes de la API V2 incluyendo
+        base de datos, cache y servicios principales.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Estado de salud de la API'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer YOUR_BEARER_TOKEN'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "status": "healthy",
+            "version": "2.0",
+            "timestamp": "2025-10-30T11:00:00.000000Z",
+            "database": "connected",
+            "cache": "operational",
+            "features": "all_systems_operational"
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
