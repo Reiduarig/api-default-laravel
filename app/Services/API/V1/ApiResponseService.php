@@ -63,11 +63,12 @@ class ApiResponseService
     }
 
 
-    public static function unauthorized($message): JsonResponse
+    public static function unauthorized($message, $data = []): JsonResponse
     {
         return response()->json([
             'status' => 'error',
-            'message' => 'Unauthorized',
+            'message' => $message,
+            'data' => $data,
         ], Response::HTTP_UNAUTHORIZED);
     }
 
