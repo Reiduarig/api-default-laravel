@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tickets', function (Blueprint $table) {
-            $table->string('priority')->default('normal')->after('status');
+            $table->string('priority')->default('low')->after('status');
             $table->text('internal_notes')->nullable()->after('description');
             $table->integer('view_count')->default(0)->after('priority');
         });
