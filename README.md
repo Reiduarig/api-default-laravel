@@ -1,61 +1,168 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# API REST Laravel - Sistema de Gestión de Usuarios y Tickets
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Una API REST completa construida con Laravel 12 que proporciona gestión de usuarios y tickets con autenticación Bearer Token y dos versiones de API.
 
-## About Laravel
+## 🚀 Características Principales
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Autenticación Segura** - Laravel Sanctum con tokens Bearer
+- **Dual API Versioning** - V1 (básica) y V2 (avanzada) 
+- **Gestión Completa** - CRUD para usuarios y tickets
+- **Documentación Interactiva** - Generada automáticamente con Scribe
+- **Manejo de Errores** - Sistema robusto de manejo de errores
+- **JSON:API Compliant** - Formato estandarizado en V2
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 📋 Versiones de la API
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### API V1 - Versión Básica
+- Operaciones CRUD estándar
+- Autenticación Bearer Token
+- Respuestas simples en JSON
+- Ideal para integraciones básicas
 
-## Learning Laravel
+### API V2 - Versión Avanzada  
+- Operaciones CRUD mejoradas
+- Patrón Repository implementado
+- Formato JSON:API compliant
+- Endpoints de estadísticas
+- Filtrado avanzado y relaciones
+- Ideal para aplicaciones complejas
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 🛠️ Tecnologías
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **Laravel 12.0** - Framework PHP
+- **Laravel Sanctum** - Autenticación API
+- **Scribe** - Documentación automática
+- **Pest** - Testing framework
+- **MySQL/SQLite** - Base de datos
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## ⚡ Inicio Rápido
 
-## Laravel Sponsors
+### Prerrequisitos
+- PHP 8.2+
+- Composer
+- Node.js & NPM
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Instalación
 
-### Premium Partners
+1. **Clonar el repositorio**
+```bash
+git clone https://github.com/tu-usuario/api-default-laravel.git
+cd api-default-laravel
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+2. **Instalación automática**
+```bash
+composer run setup
+```
 
-## Contributing
+3. **Iniciar la aplicación**
+```bash
+composer run dev
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+La API estará disponible en `http://localhost:8000`
 
-## Code of Conduct
+### Configuración Manual
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Si prefieres la instalación paso a paso:
 
-## Security Vulnerabilities
+```bash
+# Instalar dependencias
+composer install
+npm install
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# Configurar entorno
+cp .env.example .env
+php artisan key:generate
 
-## License
+# Base de datos
+php artisan migrate
+php artisan db:seed
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# Assets
+npm run build
+
+# Documentación
+php artisan scribe:generate
+
+# Iniciar servidor
+php artisan serve
+```
+
+## 📚 Documentación
+
+### Documentación Interactiva
+- **URL**: `/docs`
+- **Descripción**: Interfaz interactiva con todos los endpoints
+- **Incluye**: Ejemplos de peticiones, respuestas y pruebas en vivo
+
+
+### Endpoints Principales
+
+#### Autenticación
+- `POST /api/auth/register` - Registro de usuario
+- `POST /api/auth/login` - Inicio de sesión
+- `POST /api/auth/logout` - Cerrar sesión
+
+#### API V1 - Básica
+- `GET /api/v1/users` - Listar usuarios
+- `GET /api/v1/tickets` - Listar tickets
+- CRUD completo para ambos recursos
+
+#### API V2 - Avanzada
+- `GET /api/v2/users` - Listar con filtros avanzados
+- `GET /api/v2/users/{user}/tickets` - Tickets de usuario
+- `GET /api/v2/users/statistics` - Estadísticas de usuarios
+- `GET /api/v2/tickets/statistics` - Estadísticas de tickets
+
+## 🧪 Testing
+
+```bash
+# Ejecutar tests
+composer test
+
+# Tests con cobertura
+php artisan test --coverage
+```
+
+## 📖 Estructura del Proyecto
+
+```
+app/
+├── Http/Controllers/API/
+│   ├── V1/               # API V1 - Básica
+│   └── V2/               # API V2 - Avanzada
+├── Models/               # Modelos Eloquent
+
+
+routes/
+├── api.php              # Rutas principales
+└── api/v1.php           # Rutas específicas V1
+
+docs/                    # Documentación del proyecto
+config/scribe.php        # Configuración documentación
+```
+
+## 🔧 Comandos Útiles
+
+```bash
+# Regenerar documentación
+php artisan scribe:generate
+
+# Limpiar cache
+php artisan optimize:clear
+
+# Verificar rutas
+php artisan route:list --path=api
+
+# Ejecutar migraciones
+php artisan migrate
+
+# Generar datos de prueba
+php artisan db:seed
+```
+
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT. Ver `LICENSE` para más detalles.
