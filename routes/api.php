@@ -20,3 +20,12 @@ Route::prefix('v1')
         include __DIR__ . '/api/v1.php';
 
     });
+
+Route::prefix('v2')
+    ->as('api.v2.')
+    ->middleware(ThrottleRequests::with(15,1)) // 15 requests per minute for V2
+    ->group(function () {
+
+        include __DIR__ . '/api/v2.php';
+
+    });
