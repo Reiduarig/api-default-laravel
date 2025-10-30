@@ -93,7 +93,7 @@ class CreateTicketAction
         Log::info('Ticket created via V2 API', [
             'ticket_id' => $ticket->id,
             'user_id' => $ticket->user_id,
-            'priority' => $ticket->priority ?? 'normal',
+            'priority' => $ticket->priority ?? 'low',
             'status' => $ticket->status,
             'created_via' => 'api_v2'
         ]);

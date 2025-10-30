@@ -25,7 +25,7 @@ class TicketResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'status' => $this->status,
-            'priority' => $this->when(isset($this->priority), $this->priority, 'normal'),
+            'priority' => $this->when(isset($this->priority), $this->priority, 'low'),
             'view_count' => $this->view_count ?? 0,
             'created_at' => $this->created_at->toISOString(),
             'updated_at' => $this->updated_at->toISOString(),
